@@ -355,7 +355,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         embed.add_field(name=",**eq**",value="Use **,eq 'choice'** where __choice__ can be **['flat', 'boost', 'metal', or 'piano']**",inline=False)
         embed.add_field(name=",**aeq**",value="This is an advanced equalizer. Usage involves **,aeq __band_number__ __gain__ .**. Band number is [1-15] or (20, 40, 63, 100, 150, 250, 400, 450, 630, 1000, 1600, 2500, 4000, 10000, 16000). Gain is [-10,10] ",inline=False)
         embed.add_field(name=",**dc**",value="Use this to make xerneas leave the vc",inline=False)   
-         await ctx.send(embed=embed)
+        await ctx.send(embed=embed)
 
    
             
