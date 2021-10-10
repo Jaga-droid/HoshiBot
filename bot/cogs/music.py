@@ -339,21 +339,19 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def helpplease(self,ctx):
         embed=discord.Embed(title="**List Of Commands**",description="Yahallo everyone.!! My prefix is ','. I can only play youtube songs tho.", color=0xf9baf8)
         embed.set_thumbnail(url='https://i.pinimg.com/originals/bb/b8/7c/bbb87c5e17c8458a42376ffab837b8f2.jpg')
-        embed.add_field(name=",**play**",value="Use this command to play a song. **,play __URL__** OR **,play __type_your_keywords__**. **,play** to resume a paused song",inline=False)
+        embed.add_field(name=",**p**",value="Use this command to play a song. **,p __URL__** OR **,p __type_your_keywords__**. **,p** to resume a paused song",inline=False)
         embed.add_field(name=",**pause**",value="Use this to pause a song currently playing",inline=False)
         embed.add_field(name=",**skip**",value="Use this to skip to the next track in queue",inline=False)
         embed.add_field(name=",**skipto**",value="Use this to play the n'th track in queue.",inline=False)
         embed.add_field(name=",**prev**",value="Use this to play the previous track in queue",inline=False)
         embed.add_field(name=",**queue**",value="Use this to view the list of songs currently in the queue",inline=False)
         embed.add_field(name=",**loop**",value="Use **,loop curr** to loop current song, **,loop full** to loop whole queue, **,loop nil** to remove loop",inline=False) 
-        embed.add_field(name=",**nowp**",value="Use this to check which song is playing currently", inline=False)
+        embed.add_field(name=",**np**",value="Use this to check which song is playing currently", inline=False)
         embed.add_field(name=",**seek**",value="Use this to go to a specific timestamp in the audio file. E.g.: **,seek 2:30**", inline=False)
         embed.add_field(name=",**stop**",value="Use this to stop a song currently playing.This command also empties the queue.", inline=False)
-        embed.add_field(name=",**lyrics**",value="LOLOLOLOLL, use this to get the lyrics of current song in the queue :rofl: :rofl:",inline=False)
+        embed.add_field(name=",**lyrics**",value="Use this to get the lyrics of current song in the queue.",inline=False)
         embed.add_field(name=",**shuffle**",value="Use this to shuffle the list of songs currently in the queue",inline=False)
         embed.add_field(name=",**volume**",value="Use **,volume up** and **,volume down**",inline=False)
-        embed.add_field(name=",**eq**",value="Use **,eq 'choice'** where __choice__ can be **['flat', 'boost', 'metal', or 'piano']**",inline=False)
-        embed.add_field(name=",**aeq**",value="This is an advanced equalizer. Usage involves **,aeq __band_number__ __gain__ .**. Band number is [1-15] or (20, 40, 63, 100, 150, 250, 400, 450, 630, 1000, 1600, 2500, 4000, 10000, 16000). Gain is [-10,10] ",inline=False)
         embed.add_field(name=",**dc**",value="Use this to make xerneas leave the vc",inline=False)   
         await ctx.send(embed=embed)
 
@@ -368,7 +366,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         await player.teardown()
         await ctx.send("Disconnected.")
 
-    @commands.command(name="play")
+    @commands.command(name="play", aliases=["p"])
     async def play_command(self, ctx, *, query: t.Optional[str]):
         player = self.get_player(ctx)
 
@@ -589,49 +587,8 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         if isinstance(exc, NoLyricsFound):
             await ctx.send("No lyrics could be found.")
 
-    @commands.command(name="eq")
-    async def eq_command(self, ctx, preset: str):
-        player = self.get_player(ctx)
 
-        eq = getattr(wavelink.eqs.Equalizer, preset, None)
-        if not eq:
-            raise InvalidEQPreset
-
-        await player.set_eq(eq())
-        await ctx.send(f"Current track has been adjusted to {preset} mode.")
-
-    @eq_command.error
-    async def eq_command_error(self, ctx, exc):
-        if isinstance(exc, InvalidEQPreset):
-            await ctx.send("The EQ preset must be either 'flat', 'boost', 'metal', or 'piano'.")
-
-    @commands.command(name="adveq", aliases=["aeq"])
-    async def adveq_command(self, ctx, band: int, gain: float):
-        player = self.get_player(ctx)
-
-        if not 1 <= band <= 15 and band not in HZ_BANDS:
-            raise NonExistentEQBand
-
-        if band > 15:
-            band = HZ_BANDS.index(band) + 1
-
-        if abs(gain) > 10:
-            raise EQGainOutOfBounds
-
-        player.eq_levels[band - 1] = gain / 10
-        eq = wavelink.eqs.Equalizer(levels=[(i, gain) for i, gain in enumerate(player.eq_levels)])
-        await player.set_eq(eq)
-        await ctx.send("Equaliser adjusted.")
-
-    @adveq_command.error
-    async def adveq_command_error(self, ctx, exc):
-        if isinstance(exc, NonExistentEQBand):
-            await ctx.send(
-                "This is a 15 band equaliser -- the band number should be between 1 and 15, or one of the following "
-                "frequencies: " + ", ".join(str(b) for b in HZ_BANDS)
-            )
-        elif isinstance(exc, EQGainOutOfBounds):
-            await ctx.send("The EQ gain for any band should be between 10 dB and -10 dB.")
+  
 
     @commands.command(name="playing", aliases=["nowp","np"])
     async def playing_command(self, ctx):
