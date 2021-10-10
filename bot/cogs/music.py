@@ -282,7 +282,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     async def on_message(self,message):
         mention = f'<@!{self.bot.user.id}>'
         if(mention in message.content):
-            embed=discord.Embed(title="**List Of Commands**",description="Yahallo everyone.!! My prefix is ','. I can only play youtube songs tho.", color=#f9baf8)
+            embed=discord.Embed(title="**List Of Commands**",description="Yahallo everyone.!! My prefix is ','. I can only play youtube songs tho.", color=0xf9baf8)
             embed.set_thumbnail(url='https://i.pinimg.com/originals/bb/b8/7c/bbb87c5e17c8458a42376ffab837b8f2.jpg')
             embed.add_field(name=",**play**",value="Use this command to play a song. **,play __URL__** OR **,play __type_your_keywords__**. **,play** to resume a paused song",inline=False)
             embed.add_field(name=",**pause**",value="Use this to pause a song currently playing",inline=False)
