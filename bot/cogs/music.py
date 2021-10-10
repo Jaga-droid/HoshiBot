@@ -278,30 +278,8 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         if not member.bot and after.channel is None:
             if not [m for m in before.channel.members if not m.bot]:
                 await self.get_player(member.guild).teardown()
-    @commands.Cog.listener()
-    async def on_message(self,message):
-        mention = f'<@!{self.bot.user.id}>'
-        if(mention in message.content):
-            embed=discord.Embed(title="**List Of Commands**",description="Yahallo everyone.!! My prefix is ','. I can only play youtube songs tho.", color=0xf9baf8)
-            embed.set_thumbnail(url='https://i.pinimg.com/originals/bb/b8/7c/bbb87c5e17c8458a42376ffab837b8f2.jpg')
-            embed.add_field(name=",**play**",value="Use this command to play a song. **,play __URL__** OR **,play __type_your_keywords__**. **,play** to resume a paused song",inline=False)
-            embed.add_field(name=",**pause**",value="Use this to pause a song currently playing",inline=False)
-            embed.add_field(name=",**skip**",value="Use this to skip to the next track in queue",inline=False)
-            embed.add_field(name=",**skipto**",value="Use this to play the n'th track in queue.",inline=False)
-            embed.add_field(name=",**prev**",value="Use this to play the previous track in queue",inline=False)
-            embed.add_field(name=",**queue**",value="Use this to view the list of songs currently in the queue",inline=False)
-            embed.add_field(name=",**loop**",value="Use **,loop curr** to loop current song, **,loop full** to loop whole queue, **,loop nil** to remove loop",inline=False) 
-            embed.add_field(name=",**nowp**",value="Use this to check which song is playing currently", inline=False)
-            embed.add_field(name=",**seek**",value="Use this to go to a specific timestamp in the audio file. E.g.: **,seek 2:30**", inline=False)
-            embed.add_field(name=",**stop**",value="Use this to stop a song currently playing.This command also empties the queue.", inline=False)
-            embed.add_field(name=",**lyrics**",value="LOLOLOLOLL, use this to get the lyrics of current song in the queue :rofl: :rofl:",inline=False)
-            embed.add_field(name=",**shuffle**",value="Use this to shuffle the list of songs currently in the queue",inline=False)
-            embed.add_field(name=",**volume**",value="Use **,volume up** and **,volume down**",inline=False)
-            embed.add_field(name=",**eq**",value="Use **,eq 'choice'** where __choice__ can be **['flat', 'boost', 'metal', or 'piano']**",inline=False)
-            embed.add_field(name=",**aeq**",value="This is an advanced equalizer. Usage involves **,aeq __band_number__ __gain__ .**. Band number is [1-15] or (20, 40, 63, 100, 150, 250, 400, 450, 630, 1000, 1600, 2500, 4000, 10000, 16000). Gain is [-10,10] ",inline=False)
-            embed.add_field(name=",**dc**",value="Use this to make xerneas leave the vc",inline=False)   
-            await message.channel.send(embed=embed)
 
+   
     @wavelink.WavelinkMixin.listener()
     async def on_node_ready(self, node):
         print(f" Wavelink node `{node.identifier}` ready.")
@@ -356,7 +334,29 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
             await ctx.send("Already connected to a voice channel.")
         elif isinstance(exc, NoVoiceChannel):
             await ctx.send("No suitable voice channel was provided.")
-    
+     
+    @commands.command(name="info")
+    async def helpplease(self,ctx):
+        embed=discord.Embed(title="**List Of Commands**",description="Yahallo everyone.!! My prefix is ','. I can only play youtube songs tho.", color=0xf9baf8)
+        embed.set_thumbnail(url='https://i.pinimg.com/originals/bb/b8/7c/bbb87c5e17c8458a42376ffab837b8f2.jpg')
+        embed.add_field(name=",**play**",value="Use this command to play a song. **,play __URL__** OR **,play __type_your_keywords__**. **,play** to resume a paused song",inline=False)
+        embed.add_field(name=",**pause**",value="Use this to pause a song currently playing",inline=False)
+        embed.add_field(name=",**skip**",value="Use this to skip to the next track in queue",inline=False)
+        embed.add_field(name=",**skipto**",value="Use this to play the n'th track in queue.",inline=False)
+        embed.add_field(name=",**prev**",value="Use this to play the previous track in queue",inline=False)
+        embed.add_field(name=",**queue**",value="Use this to view the list of songs currently in the queue",inline=False)
+        embed.add_field(name=",**loop**",value="Use **,loop curr** to loop current song, **,loop full** to loop whole queue, **,loop nil** to remove loop",inline=False) 
+        embed.add_field(name=",**nowp**",value="Use this to check which song is playing currently", inline=False)
+        embed.add_field(name=",**seek**",value="Use this to go to a specific timestamp in the audio file. E.g.: **,seek 2:30**", inline=False)
+        embed.add_field(name=",**stop**",value="Use this to stop a song currently playing.This command also empties the queue.", inline=False)
+        embed.add_field(name=",**lyrics**",value="LOLOLOLOLL, use this to get the lyrics of current song in the queue :rofl: :rofl:",inline=False)
+        embed.add_field(name=",**shuffle**",value="Use this to shuffle the list of songs currently in the queue",inline=False)
+        embed.add_field(name=",**volume**",value="Use **,volume up** and **,volume down**",inline=False)
+        embed.add_field(name=",**eq**",value="Use **,eq 'choice'** where __choice__ can be **['flat', 'boost', 'metal', or 'piano']**",inline=False)
+        embed.add_field(name=",**aeq**",value="This is an advanced equalizer. Usage involves **,aeq __band_number__ __gain__ .**. Band number is [1-15] or (20, 40, 63, 100, 150, 250, 400, 450, 630, 1000, 1600, 2500, 4000, 10000, 16000). Gain is [-10,10] ",inline=False)
+        embed.add_field(name=",**dc**",value="Use this to make xerneas leave the vc",inline=False)   
+         await ctx.send(embed=embed)
+
    
             
               
