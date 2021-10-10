@@ -338,21 +338,21 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
     @commands.command(name="info")
     async def helpplease(self,ctx):
         embed=discord.Embed(title="**List Of Commands**",description="Yahallo everyone.!! My prefix is ','. I can only play youtube songs tho.", color=0xf9baf8)
-        embed.set_thumbnail(url='https://i.pinimg.com/originals/bb/b8/7c/bbb87c5e17c8458a42376ffab837b8f2.jpg')
-        embed.add_field(name=",**p**",value="Use this command to play a song. **,p __URL__** OR **,p __type_your_keywords__**. **,p** to resume a paused song",inline=False)
+        embed.set_thumbnail(url='https://media.discordapp.net/attachments/859268855854530570/861813686631792640/HoshiYahalloEveryone.png')
+        embed.add_field(name=",**p**",value=" Plays a song with the given name or url.Use again to resume a paused song.",inline=False)
         embed.add_field(name=",**pause**",value="Use this to pause a song currently playing",inline=False)
-        embed.add_field(name=",**skip**",value="Use this to skip to the next track in queue",inline=False)
-        embed.add_field(name=",**skipto**",value="Use this to play the n'th track in queue.",inline=False)
-        embed.add_field(name=",**prev**",value="Use this to play the previous track in queue",inline=False)
-        embed.add_field(name=",**queue**",value="Use this to view the list of songs currently in the queue",inline=False)
+        embed.add_field(name=",**dc**",value="Disconnect the bot.",inline=False)
+        embed.add_field(name=",**np**",value=" Shows current playing song", inline=False)
+        embed.add_field(name=",**q**",value=" Shows current queue",inline=False)
+        embed.add_field(name=",**skip**",value="Skips the currently playing song",inline=False)
+        embed.add_field(name=",**prev**",value="Plays the previous song",inline=False)
+        embed.add_field(name=",**seek**",value="Format: **,seek 2:30**", inline=False)
+        embed.add_field(name=",**shuffle**",value="Shuffles the queue",inline=False)
         embed.add_field(name=",**loop**",value="Use **,loop curr** to loop current song, **,loop full** to loop whole queue, **,loop nil** to remove loop",inline=False) 
-        embed.add_field(name=",**np**",value="Use this to check which song is playing currently", inline=False)
-        embed.add_field(name=",**seek**",value="Use this to go to a specific timestamp in the audio file. E.g.: **,seek 2:30**", inline=False)
+        embed.add_field(name=",**skipto**",value="Plays the n'th track in queue.",inline=False)
         embed.add_field(name=",**stop**",value="Use this to stop a song currently playing.This command also empties the queue.", inline=False)
-        embed.add_field(name=",**lyrics**",value="Use this to get the lyrics of current song in the queue.",inline=False)
-        embed.add_field(name=",**shuffle**",value="Use this to shuffle the list of songs currently in the queue",inline=False)
+        embed.add_field(name=",**lyrics**",value=":notes: Sing along :notes:",inline=False)
         embed.add_field(name=",**volume**",value="Use **,volume up** and **,volume down**",inline=False)
-        embed.add_field(name=",**dc**",value="Use this to make xerneas leave the vc",inline=False)   
         await ctx.send(embed=embed)
 
    
@@ -471,7 +471,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
         player.queue.set_repeat_mode(mode)
         await ctx.send(f"The repeat mode has been set to {mode}.")
 
-    @commands.command(name="queue")
+    @commands.command(name="queue", aliases=["q"]))
     async def queue_command(self, ctx, show: t.Optional[int] = 10):
         player = self.get_player(ctx)
 
@@ -480,7 +480,7 @@ class Music(commands.Cog, wavelink.WavelinkMixin):
 
         embed = discord.Embed(
             title="Queue",
-            description=f"Only a maximum of  {show} tracks will be shown",
+            description=f"Only {show} tracks will be shown by default",
             colour=ctx.author.colour,
             timestamp=dt.datetime.utcnow()
         )
