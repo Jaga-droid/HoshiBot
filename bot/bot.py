@@ -20,11 +20,12 @@ class MusicBot(commands.Bot):
 
     def run(self):
         self.setup()
-        tok=os.environ['TOKEN']
-        print("Running bot...")
-        super().run(tok, reconnect=True)
+        TOKEN = os.environ['TOKEN']
 
-    async def clshutdown(self):
+        print("Running bot...")
+        super().run(TOKEN, reconnect=True)
+
+    async def shutdown(self):
         print("Closing connection to Discord...")
         await super().close()
 
@@ -63,5 +64,3 @@ class MusicBot(commands.Bot):
     async def on_message(self, msg):
         if not msg.author.bot:
             await self.process_commands(msg)
-        # if "hoshi" in msg.content:
-            # await msg.channel.send('https://media.discordapp.net/attachments/768751495293566988/820806883672588308/unknown.png')
